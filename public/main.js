@@ -25,7 +25,7 @@ const fbDatabase = firebase.database();
 		var dogName = document.getElementById('message-text').value;
 			document.getElementById("dogName").innerHTML = dogName;
 		var dogdata = {
-			name: dogName 
+			name: dogName
 //
       // age: 21,
 //      // weight: 56
@@ -42,11 +42,25 @@ function saveDog(dogdata){
     // updates['/eventList/'+ newPostKey]
     // updates['/dogsList/' + uid + '/' ] = newPostKey;
   
-    
-    fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
+      fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
     fbDatabase.ref('/eventList/'+ newPostKey).set({isEmpty:true});
     fbDatabase.ref('/dogsList/' + userID + '/'+newPostKey).set({isEmpty:true});
 
+}
+
+function readDog(userID){
+    //console.log(userID)
+    var folder = fbDatabase.ref('/dogsList/'+ userID);
+    var dogKey;
+    folder.once('value',function(snapshot){
+        dogKey = snapshot.child();
+        console.log(dogKey);
+        })
+     folder = fbDatabase.ref('/dogsInfo/'+ dogKey);
+    var key = folder.once('value',function(snapshot){
+        document.getElementById("dogName").innerHTML = snapshot.val().name;
+        })
+    
 }
 
 function addEvent(){
@@ -106,6 +120,7 @@ function addEvent(){
             emailVerified : user.emailVerified
             };
             userID = user.uid;
+           
          // }
         //  console.log("Sign-in provider: " + user.providerId);
         //  console.log("  Provider-specific UID: " + userID);
@@ -117,6 +132,12 @@ function addEvent(){
            var updates = {};
            updates['/userInfo/' + userID] = userData;
             firebase.database().ref().update(updates);
+
+            /*
+             * TODO: display user data somewhere in front end
+             *
+             */
+            readDog(userID);
 
             
         }
