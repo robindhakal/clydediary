@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script> 
+   <script>
+    const config = {
+      apiKey: "AIzaSyDdR3v7z2R6Y913rv9bnZoGImaIW2sk_vM",
+      authDomain: "clyde-diary.firebaseapp.com",
+      databaseURL: "https://clyde-diary.firebaseio.com",
+      projectId: "clyde-diary",
+      storageBucket: "clyde-diary.appspot.com",
+      messagingSenderId: "532713680020"
+  };
+  firebase.initializeApp(config);
+  </script>
+
+  <script src="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.css" />
+  <script type="text/javascript">
+    // FirebaseUI config.
+    var uiConfig = {
+      signInSuccessUrl: 'logged-in.html',
+      signInOptions: [
+        // Leave the lines as is for the providers you want to offer your users.
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        
+        firebase.auth.EmailAuthProvider.PROVIDER_ID
+      ],
+      // Terms of service url.
+      tosUrl: '<your-tos-url>'
+    };
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    // The start method will wait until the DOM is loaded.
+    ui.start('#firebaseui-auth-container', uiConfig);
+  </script>
+  </head>
+  <body>
+
+  <div id="firebaseui-auth-container"></div>
+  </body>
+</html>
