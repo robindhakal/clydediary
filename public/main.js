@@ -19,13 +19,13 @@ const fbDatabase = firebase.database();
 
     var userID, name, email, photoUrl, emailVerified;
     var dogID = 1234;
-	
+
 	function addDogButton(){
 	//console.log(document.getElementById('message-text').value);
 		var dogName = document.getElementById('message-text').value;
 			document.getElementById("dogName").innerHTML = dogName;
 		var dogdata = {
-			name: dogName 
+			name: dogName
 //
       // age: 21,
 //      // weight: 56
@@ -41,8 +41,8 @@ function saveDog(dogdata){
     // updates['/dogsInfo/' + newPostKey] = dogdata;
     // updates['/eventList/'+ newPostKey]
     // updates['/dogsList/' + uid + '/' ] = newPostKey;
-  
-    
+
+
     fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
     fbDatabase.ref('/eventList/'+ newPostKey).set({isEmpty:true});
     fbDatabase.ref('/dogsList/' + userID + '/'+newPostKey).set({isEmpty:true});
@@ -60,17 +60,17 @@ function addEvent(){
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
-    
+
     if(dd<10) {
         dd = '0'+dd
-    } 
-    
+    }
+
     if(mm<10) {
         mm = '0'+mm
-    } 
-    
+    }
+
     today = mm + '/' + dd + '/' + yyyy;
-	
+
 	var thenote = document.getElementById('message-text2').value;
 
     var event ={
@@ -79,16 +79,16 @@ function addEvent(){
         date : today,
 		note: thenote
     }
-	
+
 			$('#addEventModal').modal('hide');
-	
+
 	saveEvents(event);
 	var reftoDIV = 	document.getElementById("innerDIV");
 	reftoDIV.innerHTML = myCode;
 	document.getElementById("notes").innerHTML = thenote;
 	document.getElementById("userName").innerHTML = "Robin Dhakal";
 	document.getElementById("time").innerHTML = event.time;
-	
+
 }
 
     firebase.auth().onAuthStateChanged(function(user) {
@@ -97,7 +97,7 @@ function addEvent(){
 
           //var user = firebase.auth().currentUser;
          // var name, email, photoUrl, emailVerified;
-          
+
          // if (user != null) {
             userData = {
             name : user.displayName,
@@ -112,13 +112,13 @@ function addEvent(){
         //  console.log("  Name: " + name);
         //  console.log("  Email: " + email);
         //  console.log("  Photo URL: " + photoUrl);
-           // var ref = fbDatabase.ref(); 
+           // var ref = fbDatabase.ref();
           // var newPostKey = fbDatabase.ref().child('userInfo').push().key;
            var updates = {};
            updates['/userInfo/' + userID] = userData;
             firebase.database().ref().update(updates);
 
-            
+
         }
         else {
           // No user is signed in.
@@ -127,11 +127,11 @@ function addEvent(){
 
 function code() {
 	document.getElementById("dogPic").src = dogPicURL;
-	
+
         }
 window.onload = code;
 
-	
+
 
 
 function saveEvents(event){
