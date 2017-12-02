@@ -6,6 +6,7 @@ var notes = "this is tjlaksfjdlkasdf";
 var userName = "Fuck Robin";
 var time = "7:34 AM";
 
+var globalCount = 0;
 
 var myCode = '<div class="card bg-info text-white text-center">\<div class="card-header">\<h1>Walk</h1>\<h2 id="time"></h2>\</div>\<div class="card-body">\<h4 class="card-title">Note:</h4>\<p id="notes" class="card-text"></p>\</div>\<div class="card-footer" id="userName">By: </div>\</div>\<br>';
 
@@ -123,6 +124,35 @@ function addEvent(){
     }
 
 			$('#addEventModal').modal('hide');
+	
+    saveEvents(event);
+    
+    var reftoDIV = 	document.createElement("div");
+    
+    reftoDIV.innerHTML = '<div class="card bg-info text-white text-center">\
+        <div class="card-header">\
+        <h1>Walk</h1>\
+        <h2 id="time"></h2>\
+        </div>\<div class="card-body">\
+        <h4 class="card-title">Note:' + globalCount + '</h4>\
+        <p id="notes" class="card-text"></p>\
+        </div>\
+        <div class="card-footer" id="userName">By: </div>\
+        </div>\<br>';
+        globalCount++;
+
+	//document.getElementById("notes").innerHTML = thenote;
+	//document.getElementById("userName").innerHTML = "Robin Dhakal pt 2";
+    //document.getElementById("time").innerHTML = event.time;
+
+    var inDIV = document.getElementById("innerDIV");
+    
+    if(!inDIV.childNodes.isEmpty){
+        inDIV.insertBefore(reftoDIV, inDIV.childNodes[0]);
+    }else{
+        inDIV.appendChild(reftoDIV);
+    }
+    //document.getElementById("innerDIV").appendChild(document.createTextNode("Hi"));
 
 	saveEvents(event);
 	displayEvents(dogID);
