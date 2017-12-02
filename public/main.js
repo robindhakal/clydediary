@@ -1,9 +1,5 @@
 // JavaScript Document
 
-
-
-
-
 var dogNameDB = "fuck";
 var dogPicURL = '/clyde.png';
 var notes = "this is tjlaksfjdlkasdf";
@@ -30,7 +26,9 @@ const fbDatabase = firebase.database();
       // age: 21,
 //      // weight: 56
 		};
-			saveDog(dogdata);
+            //saveDog(dogdata);
+            //readDog(userID);
+            displayEvents(dogID)
 		$('#addDog').modal('hide');
 		}
 function saveDog(dogdata){
@@ -41,12 +39,56 @@ function saveDog(dogdata){
     // updates['/dogsInfo/' + newPostKey] = dogdata;
     // updates['/eventList/'+ newPostKey]
     // updates['/dogsList/' + uid + '/' ] = newPostKey;
-
-
-    fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
+  
+      fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
     fbDatabase.ref('/eventList/'+ newPostKey).set({isEmpty:true});
     fbDatabase.ref('/dogsList/' + userID + '/'+newPostKey).set({isEmpty:true});
 
+}
+
+function displayDatas(userID){
+   // console.log(userID)
+    var folder = fbDatabase.ref('/dogsList/'+ userID);
+    var dogKey;
+    folder.once('value',function(snapshot){
+        dogKey = snapshot.exportVal();
+        dogKey = Object.keys(dogKey)[0];
+        dogID = dogKey;
+        //console.log(dogID);
+        folder = fbDatabase.ref('/dogsInfo/'+ dogKey);
+        folder.once('value',function(snapshot){
+          //  console.log(snapshot.val());
+            document.getElementById("dogName").innerHTML = snapshot.val().name;
+            })
+
+            var reftoDIV = 	document.getElementById("innerDIV");
+            reftoDIV.innerHTML = myCode;
+    
+            var folder = fbDatabase.ref('/eventList/'+ dogID);
+    
+            folder.once('value',function(snapshot){
+                snapshot.forEach(function(childSnapshot){
+                   var childData = childSnapshot.val();
+                    //console.log(key);
+                    document.getElementById("notes").innerHTML = childData.note.toString();
+                    document.getElementById("userName").innerHTML = "Robin Dhakal"
+                    document.getElementById("time").innerHTML = childData.time.toString();
+    
+                    //console.log(childData.notes);
+                    //console.log(childData.time);
+                    return true;
+                })
+               
+            })
+        })
+        //console.log(dogID);
+        return dogID;
+    // folder = fbDatabase.ref('/dogsInfo/'+ dogKey);
+    // folder.once('value',function(snapshot){
+    //     console.log(snapshot.val());
+    //     document.getElementById("dogName").innerHTML = snapshot.val().name;
+    //     })
+    
 }
 
 function addEvent(){
@@ -55,7 +97,7 @@ function addEvent(){
     var m = today.getMinutes();
     var s = today.getSeconds();
     m = checkTime(m);
-    s = checkTime(s);
+   // s = checkTime(s);
 
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
@@ -75,7 +117,7 @@ function addEvent(){
 
     var event ={
         type : 'Walk',
-        time : h + ":" + m + ":" + s,
+        time : h + ":" + m,
         date : today,
 		note: thenote
     }
@@ -83,13 +125,35 @@ function addEvent(){
 			$('#addEventModal').modal('hide');
 
 	saveEvents(event);
-	var reftoDIV = 	document.getElementById("innerDIV");
-	reftoDIV.innerHTML = myCode;
-	document.getElementById("notes").innerHTML = thenote;
-	document.getElementById("userName").innerHTML = "Robin Dhakal";
-	document.getElementById("time").innerHTML = event.time;
-
+	displayEvents(dogID);
+	
 }
+
+    function displayEvents(dogID){
+
+        var reftoDIV = 	document.getElementById("innerDIV");
+        reftoDIV.innerHTML = myCode;
+
+        var folder = fbDatabase.ref('/eventList/'+ dogID);
+
+        folder.once('value',function(snapshot){
+            snapshot.forEach(function(childSnapshot){
+               var childData = childSnapshot.val();
+                //console.log(key);
+                document.getElementById("notes").innerHTML = childData.note.toString();
+                document.getElementById("userName").innerHTML = "Robin Dhakal"
+                document.getElementById("time").innerHTML = childData.time.toString();
+
+                console.log(childData.notes);
+                console.log(childData.time);
+                return true;
+            })
+           
+        })
+        
+       
+        
+    }
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -106,6 +170,7 @@ function addEvent(){
             emailVerified : user.emailVerified
             };
             userID = user.uid;
+           
          // }
         //  console.log("Sign-in provider: " + user.providerId);
         //  console.log("  Provider-specific UID: " + userID);
@@ -118,7 +183,16 @@ function addEvent(){
            updates['/userInfo/' + userID] = userData;
             firebase.database().ref().update(updates);
 
+            /*
+             * TODO: display user data somewhere in front end
+             *
+             */
+            var dog = displayDatas(userID);
+           // console.log(dog)
+          // displayEvents(dog);
+           // console.log(dog);
 
+            
         }
         else {
           // No user is signed in.

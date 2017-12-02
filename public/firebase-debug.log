@@ -1,0 +1,36 @@
+[debug] [2017-12-02T03:16:49.367Z] ----------------------------------------------------------------------
+[debug] [2017-12-02T03:16:49.369Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-12-02T03:16:49.369Z] CLI Version:   3.15.0
+[debug] [2017-12-02T03:16:49.369Z] Platform:      darwin
+[debug] [2017-12-02T03:16:49.369Z] Node Version:  v8.9.1
+[debug] [2017-12-02T03:16:49.369Z] Time:          Fri Dec 01 2017 21:16:49 GMT-0600 (CST)
+[debug] [2017-12-02T03:16:49.369Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-12-02T03:16:49.384Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-12-02T03:16:49.384Z] > authorizing via signed-in user
+[debug] [2017-12-02T03:16:49.386Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-12-02T03:16:49.386Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/qWrrsaB0GaoqwoUnoY_DHz6CKt_h4rgs2Pkne8AtSlk6iibpolXhfmfi4hVcobcB',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Fri Dec 01 2017 21:16:49 GMT-0600 (CST)
+[debug] [2017-12-02T03:16:49.528Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-02T03:16:49.556Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/clyde-diary  
+ Fri Dec 01 2017 21:16:49 GMT-0600 (CST)
+[debug] [2017-12-02T03:16:49.955Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-02T03:16:49.956Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/clyde-diary/tokens  
+ Fri Dec 01 2017 21:16:49 GMT-0600 (CST)
+[debug] [2017-12-02T03:16:50.654Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/robindhakal/webAppProject'...
+[info] 
+[debug] [2017-12-02T03:16:50.657Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/clyde-diary  
+ Fri Dec 01 2017 21:16:50 GMT-0600 (CST)
+[debug] [2017-12-02T03:16:50.924Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-02T03:16:50.925Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/532713680020/clients/_:getWebAppConfig  
+ Fri Dec 01 2017 21:16:50 GMT-0600 (CST)
+[debug] [2017-12-02T03:16:51.138Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
