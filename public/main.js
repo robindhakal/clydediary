@@ -124,7 +124,6 @@ function addEvent(){
     }
 
 			$('#addEventModal').modal('hide');
-<<<<<<< HEAD
 	
     saveEvents(event);
     
@@ -154,11 +153,9 @@ function addEvent(){
         inDIV.appendChild(reftoDIV);
     }
     //document.getElementById("innerDIV").appendChild(document.createTextNode("Hi"));
-=======
 
 	saveEvents(event);
 	displayEvents(dogID);
->>>>>>> refs/remotes/origin/master
 	
 }
 
