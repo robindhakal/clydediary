@@ -1,9 +1,5 @@
 // JavaScript Document
 
-
-
-
-
 var dogNameDB = "fuck";
 var dogPicURL = '/clyde.png';
 var notes = "this is tjlaksfjdlkasdf";
