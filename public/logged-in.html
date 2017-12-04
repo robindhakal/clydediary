@@ -83,7 +83,8 @@
 
       </li>
       <li class="nav-item">
-        <a class="btn btn-info" href="#">Sign Out</a>
+        <span id="usersName"></span>
+        <a class="btn btn-info" id="signOutBtn" onclick="signOut()"  href="#">Sign Out</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -105,24 +106,24 @@
         <form>
             <div class="form-group">
               <label for="message-text" class="col-form-label">Name:</label>
-              <input type="text" class="form-control" id="message-text" placeholder="Doggo's Name" required>
+              <input type="text" class="form-control" id="dogName" placeholder="Doggo's Name" required>
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Gender:</label>
-            <select class="form-control" id="exampleFormControlSelect1">
+            <select class="form-control" id="genderSelect" required>
               <option selected>Choose...</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Non-binary</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Non-binary">Non-binary</option>
             </select>
         </div>
       <div class="form-group">
-        <label for="weight" class="col-form-label">Weight:</label>
+        <label for="weight" id="weight" class="col-form-label">Weight:</label>
         <input type="number" class="form-control" id="weight" placeholder="Doggo's Weight" min="1" max="300" required>
     </div>
     <div class="form-check">
       <label class="form-check-label">
-        <input type="checkbox" class="form-check-input">
+        <input type="checkbox" id="neutSpay" value = "Yes" class="form-check-input" required>
         Neutered/Spayed?
       </label>
     </div>

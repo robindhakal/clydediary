@@ -6,8 +6,9 @@ var notes = "this is tjlaksfjdlkasdf";
 var userName = "Fuck Robin";
 var time = "7:34 AM";
 
+var globalCount = 0;
 
-var myCode = '<div class="card bg-info text-white text-center">\<div class="card-header">\<h1>Walk</h1>\<h2 id="time"></h2>\</div>\<div class="card-body">\<h4 class="card-title">Note:</h4>\<p id="notes" class="card-text"></p>\</div>\<div class="card-footer" id="userName">By: </div>\</div>\<br>';
+//var myCode = '<div class="card bg-info text-white text-center">\<div class="card-header">\<h1>Walk</h1>\<h2 id="time"></h2>\</div>\<div class="card-body">\<h4 class="card-title">Note:</h4>\<p id="notes" class="card-text"></p>\</div>\<div class="card-footer" id="userName">By: </div>\</div>\<br>';
 
 const fbDatabase = firebase.database();
 
@@ -17,18 +18,23 @@ const fbDatabase = firebase.database();
     var dogID = 1234;
 
 	function addDogButton(){
-	//console.log(document.getElementById('message-text').value);
-		var dogName = document.getElementById('message-text').value;
-			document.getElementById("dogName").innerHTML = dogName;
+        var select = document.getElementById('genderSelect');
+        var gender = select.options[select.selectedIndex].value;
+    //console.log(val);
+        console.log(document.getElementById('birthday').value);
+        console.log(document.getElementById('neutSpay').checked);
+        console.log(document.getElementById('file2').value);
 		var dogdata = {
-			name: dogName
-//
-      // age: 21,
-//      // weight: 56
+            name: document.getElementById('dogName').value,
+            gender: gender,
+           // age: document.getElementById('message-text').value,
+            weight: document.getElementById('weight').value,
+            NeuteredOrSpayed:"",
+            picture: ""
 		};
             //saveDog(dogdata);
             //readDog(userID);
-            displayEvents(dogID)
+         //   displayEvents(dogID)
 		$('#addDog').modal('hide');
 		}
 function saveDog(dogdata){
@@ -40,11 +46,12 @@ function saveDog(dogdata){
     // updates['/eventList/'+ newPostKey]
     // updates['/dogsList/' + uid + '/' ] = newPostKey;
   
-      fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
+    fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
     fbDatabase.ref('/eventList/'+ newPostKey).set({isEmpty:true});
     fbDatabase.ref('/dogsList/' + userID + '/'+newPostKey).set({isEmpty:true});
 
 }
+
 
 function displayDatas(userID){
    // console.log(userID)
@@ -61,24 +68,13 @@ function displayDatas(userID){
             document.getElementById("dogName").innerHTML = snapshot.val().name;
             })
 
-            var reftoDIV = 	document.getElementById("innerDIV");
-            reftoDIV.innerHTML = myCode;
+            // var reftoDIV = 	document.getElementById("innerDIV");
+            // reftoDIV.innerHTML = myCode;
     
             var folder = fbDatabase.ref('/eventList/'+ dogID);
     
             folder.once('value',function(snapshot){
-                snapshot.forEach(function(childSnapshot){
-                   var childData = childSnapshot.val();
-                    //console.log(key);
-                    document.getElementById("notes").innerHTML = childData.note.toString();
-                    document.getElementById("userName").innerHTML = "Robin Dhakal"
-                    document.getElementById("time").innerHTML = childData.time.toString();
-    
-                    //console.log(childData.notes);
-                    //console.log(childData.time);
-                    return true;
-                })
-               
+                displayAllNotes(snapshot);
             })
         })
         //console.log(dogID);
@@ -89,6 +85,42 @@ function displayDatas(userID){
     //     document.getElementById("dogName").innerHTML = snapshot.val().name;
     //     })
     
+}
+
+function displayAllNotes(snapshot){
+
+    snapshot.forEach(function(childSnapshot){
+        var childData = childSnapshot.val();
+        
+         if(childData.note != null){
+
+         var reftoDIV = 	document.createElement("div");
+         
+         reftoDIV.innerHTML = '<div class="card bg-info text-white text-center">\
+             <div class="card-header">\
+             <h1>Walk</h1>\
+             <h2>' + childData.time + '</h2>\
+             </div>\<div class="card-body">\
+             <h4 class="card-title">Note: ' + childData.note + '</h4>\
+             <p id="notes" class="card-text"></p>\
+             </div>\
+             <div class="card-footer">By: Robin Dhakal </div>\
+             </div>\<br>';
+     
+         var inDIV = document.getElementById("innerDIV");
+         
+         if(!inDIV.childNodes.isEmpty){
+             inDIV.insertBefore(reftoDIV, inDIV.childNodes[0]);
+         }else{
+             inDIV.appendChild(reftoDIV);
+         }
+            //  console.log(childData.note);
+            //  console.log(childData.time);
+            //  console.log("next:");
+         }
+        // return true;
+     })
+
 }
 
 function addEvent(){
@@ -122,10 +154,37 @@ function addEvent(){
 		note: thenote
     }
 
-			$('#addEventModal').modal('hide');
+	$('#addEventModal').modal('hide');
 
-	saveEvents(event);
-	displayEvents(dogID);
+    var reftoDIV = 	document.createElement("div");
+    
+    reftoDIV.innerHTML = '<div class="card bg-info text-white text-center">\
+        <div class="card-header">\
+        <h1>Walk</h1>\
+        <h2 id="time"></h2>\
+        </div>\<div class="card-body">\
+        <h4 class="card-title">Note:' + globalCount + '</h4>\
+        <p id="notes" class="card-text"></p>\
+        </div>\
+        <div class="card-footer" id="userName">By: </div>\
+        </div>\<br>';
+        globalCount++;
+
+	//document.getElementById("notes").innerHTML = thenote;
+	//document.getElementById("userName").innerHTML = "Robin Dhakal pt 2";
+    //document.getElementById("time").innerHTML = event.time;
+
+    var inDIV = document.getElementById("innerDIV");
+    
+    if(!inDIV.childNodes.isEmpty){
+        inDIV.insertBefore(reftoDIV, inDIV.childNodes[0]);
+    }else{
+        inDIV.appendChild(reftoDIV);
+    }
+    //document.getElementById("innerDIV").appendChild(document.createTextNode("Hi"));
+
+	//saveEvents(event);
+	//displayEvents(dogID);
 	
 }
 
@@ -140,13 +199,14 @@ function addEvent(){
             snapshot.forEach(function(childSnapshot){
                var childData = childSnapshot.val();
                 //console.log(key);
-                document.getElementById("notes").innerHTML = childData.note.toString();
-                document.getElementById("userName").innerHTML = "Robin Dhakal"
-                document.getElementById("time").innerHTML = childData.time.toString();
+                // document.getElementById("notes").innerHTML = childData.note.toString();
+                // document.getElementById("userName").innerHTML = "Robin Dhakal"
+                // document.getElementById("time").innerHTML = childData.time.toString();
 
                 console.log(childData.notes);
                 console.log(childData.time);
-                return true;
+                console.log("next:");
+                //return true;
             })
            
         })
@@ -189,7 +249,7 @@ function addEvent(){
              */
             var dog = displayDatas(userID);
            // console.log(dog)
-          // displayEvents(dog);
+            //displayEvents(dog);
            // console.log(dog);
 
             
@@ -226,3 +286,10 @@ function checkTime(i) {
 //function hello(){
 //document.getElementById("innerDIV").innerHTML = myCode;
 //}
+function signOut(){
+    firebase.auth().signOut().then(function() {
+       window.location.href = "index.html";
+      }, function(error) {
+        
+      });
+}
