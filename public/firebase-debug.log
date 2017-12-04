@@ -34,3 +34,39 @@
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
 
+[debug] [2017-12-04T00:57:08.045Z] ----------------------------------------------------------------------
+[debug] [2017-12-04T00:57:08.047Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\corte\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-12-04T00:57:08.048Z] CLI Version:   3.15.4
+[debug] [2017-12-04T00:57:08.048Z] Platform:      win32
+[debug] [2017-12-04T00:57:08.048Z] Node Version:  v6.11.0
+[debug] [2017-12-04T00:57:08.048Z] Time:          Sun Dec 03 2017 18:57:08 GMT-0600 (Central Standard Time)
+[debug] [2017-12-04T00:57:08.048Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-12-04T00:57:08.062Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-12-04T00:57:08.063Z] > authorizing via signed-in user
+[debug] [2017-12-04T00:57:08.067Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-12-04T00:57:08.067Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/SJb_O4lm51F9pPzLanXM3EzCosMugmHbjqAzWug4f70',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sun Dec 03 2017 18:57:08 GMT-0600 (Central Standard Time)
+[debug] [2017-12-04T00:57:08.245Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-04T00:57:08.274Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/clyde-diary  
+ Sun Dec 03 2017 18:57:08 GMT-0600 (Central Standard Time)
+[debug] [2017-12-04T00:57:08.687Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-04T00:57:08.689Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/clyde-diary/tokens  
+ Sun Dec 03 2017 18:57:08 GMT-0600 (Central Standard Time)
+[debug] [2017-12-04T00:57:09.070Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\corte\Documents\School\Fall 2017\461L\clydediary'...
+[info] 
+[debug] [2017-12-04T00:57:09.080Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/clyde-diary  
+ Sun Dec 03 2017 18:57:09 GMT-0600 (Central Standard Time)
+[debug] [2017-12-04T00:57:09.380Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-04T00:57:09.381Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/532713680020/clients/_:getWebAppConfig  
+ Sun Dec 03 2017 18:57:09 GMT-0600 (Central Standard Time)
+[debug] [2017-12-04T00:57:09.798Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+
