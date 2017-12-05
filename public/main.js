@@ -1,45 +1,73 @@
 // JavaScript Document
 
-var dogNameDB = "fuck";
-var dogPicURL = '/clyde.png';
-var notes = "this is tjlaksfjdlkasdf";
-var userName = "Fuck Robin";
-var time = "7:34 AM";
+var dogNameDB;
+var dogPicURL;
+var notes;
+var userName;
+var time;
 
 var globalCount = 0;
 
-//var myCode = '<div class="card bg-info text-white text-center">\<div class="card-header">\<h1>Walk</h1>\<h2 id="time"></h2>\</div>\<div class="card-body">\<h4 class="card-title">Note:</h4>\<p id="notes" class="card-text"></p>\</div>\<div class="card-footer" id="userName">By: </div>\</div>\<br>';
-
 const fbDatabase = firebase.database();
+const fbStorage = firebase.storage();
 
     var userData ={};
 
     var userID, name, email, photoUrl, emailVerified;
-    var dogID = 1234;
+    var dogID;
+    var selectedFile;
+
+    function getFilename(event){
+        selectedFile = event.target.files[0];
+       // console.log(selectedFile);
+    };
 
 	function addDogButton(){
         var select = document.getElementById('genderSelect');
         var gender = select.options[select.selectedIndex].value;
-    //console.log(val);
-        console.log(document.getElementById('birthday').value);
-        console.log(document.getElementById('neutSpay').checked);
-        console.log(document.getElementById('file2').value);
+        var newPostKey = fbDatabase.ref().child('dogsInfo').push().key;
+        addPhoto(newPostKey);
 		var dogdata = {
             name: document.getElementById('dogName').value,
             gender: gender,
-           // age: document.getElementById('message-text').value,
+            dateOfBirth: document.getElementById('birthday').value,
+           //age: document.getElementById('message-text').value,
             weight: document.getElementById('weight').value,
-            NeuteredOrSpayed:"",
-            picture: ""
-		};
-            //saveDog(dogdata);
-            //readDog(userID);
-         //   displayEvents(dogID)
+            NeuteredOrSpayed: document.getElementById('neutSpay').checked,
+        }; 
+        saveDog(dogdata,newPostKey);
+        //readDog(userID);
+        //displayEvents(dogID)
 		$('#addDog').modal('hide');
-		}
-function saveDog(dogdata){
+    }
+        
+        function addPhoto(key){
+            // var folder = fbDatabase.ref('/dogsList/'+ userID);
+            // folder.once('value',function(snapshot){
+            //     dogKey = snapshot.exportVal();
+            //     dogKey = Object.keys(dogKey)[0];
+            //     dogID = dogKey;
 
-    var newPostKey = fbDatabase.ref().child('dogsInfo').push().key;
+                var storeRef = fbStorage.ref('dogProfilePics/' + key + '/' + selectedFile.name);
+                var uploadTask = storeRef.put(selectedFile);
+
+                // Register three observers:
+                // 1. 'state_changed' observer, called any time the state changes
+                // 2. Error observer, called on failure
+                // 3. Completion observer, called on successful completion
+                uploadTask.on('state_changed', function(snapshot){
+                    // Observe state change events such as progress, pause, and resume
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                }, function(error) {
+                    // Handle unsuccessful uploads
+                }, function() {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    var downloadURL = uploadTask.snapshot.downloadURL;
+                });
+        }
+
+function saveDog(dogdata, newPostKey){
     dogID = newPostKey;
     // var updates = {};
     // updates['/dogsInfo/' + newPostKey] = dogdata;
@@ -96,7 +124,7 @@ function displayAllNotes(snapshot){
 
          var reftoDIV = 	document.createElement("div");
          
-         reftoDIV.innerHTML = '<div class="card bg-info text-white text-center mx-auto" style="width: 600px;">\
+         reftoDIV.innerHTML = '<div class="card bg-info text-white text-center">\
              <div class="card-header">\
              <h1>Walk</h1>\
              <h2>' + childData.time + '</h2>\
@@ -195,30 +223,18 @@ function addEvent(){
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          // User is signed in.
-
-          //var user = firebase.auth().currentUser;
-         // var name, email, photoUrl, emailVerified;
-
-         // if (user != null) {
+        
             userData = {
             name : user.displayName,
             email : user.email,
             photoUrl : user.photoURL,
             emailVerified : user.emailVerified
             };
+
             userID = user.uid;
-           
-         // }
-        //  console.log("Sign-in provider: " + user.providerId);
-        //  console.log("  Provider-specific UID: " + userID);
-        //  console.log("  Name: " + name);
-        //  console.log("  Email: " + email);
-        //  console.log("  Photo URL: " + photoUrl);
-           // var ref = fbDatabase.ref();
-          // var newPostKey = fbDatabase.ref().child('userInfo').push().key;
-           var updates = {};
-           updates['/userInfo/' + userID] = userData;
+
+            var updates = {};
+            updates['/userInfo/' + userID] = userData;
             firebase.database().ref().update(updates);
 
             /*
