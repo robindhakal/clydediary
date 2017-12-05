@@ -5,10 +5,18 @@
     z-index: 99; /* Make sure it does not overlap */
     border: none; /* Remove borders */
     outline: none; /* Remove outline */
-    background-color: red; /* Set a background color */
-	font-size: 20px;
-    color: white; /* Text color */
     cursor: pointer; /* Add a mouse pointer on hover */
-    padding: 20px; /* Some padding */
-    border-radius: 100px; /* Rounded corners */
+    border-radius: 50%; /* Rounded corners */
+	padding: none;
+}
+#foodBtn {
+	position: fixed; /* Fixed/sticky position */
+    bottom: 100px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    border-radius: 50%; /* Rounded corners */
+	padding: none;
 }

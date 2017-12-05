@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     	  <link rel="stylesheet" href="main.css">
 
-   <script src="https://use.fontawesome.com/a87d4730ac.js"></script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	  
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
    <script>
     const config = {
@@ -70,42 +70,91 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 <a class="navbar-brand" href="#">
     <img id="dogPic" src="" width="40" height="40" class="d-inline-block align-top" alt="">
-	<span id="dogName"></span>
   </a>    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
         <a class="nav-link" data-toggle="modal" data-target="#addDog">Add Dog<span class="sr-only">(current)</span></a>
-
-
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Add Family Member</a>
+        <a class="nav-link" data-toggle="modal" data-target="#inviteFamily">Add Family Member</a>
       </li>
 
-      </li>
-      <li class="nav-item">
+<!--      <li class="nav-item">
         <span id="usersName"></span>
         <a class="btn btn-info" id="signOutBtn" onclick="signOut()"  href="#">Sign Out</a>
-      </li>
+      </li>-->
     </ul>
+	  <form class="form-inline mt-2 mt-md-0">
+		  <span id="usersName"></span>
+          <a class="btn btn-info my-2 my-sm-0" id="signOutBtn" onclick="signOut()"  href="#">Sign Out</a>
+      </form>
   </div>
 </nav>
+	
+
 <br>
 
-<div class="modal fade" id="addDog" tabindex="-1" role="dialog">
+<div class="modal fade" id="inviteFamily" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New Dog to Diary</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Share dog profile</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
-            <div class="form-group">
+		  <div class="form-group">
+            <label for="exampleFormControlSelect1">Select a dog:</label>
+				<select class="form-control" id="genderSelect" required>
+				  <option selected>Choose One...</option>
+				  <option></option>
+				  <option></option>
+				  <option></option>
+				</select>
+        </div>
+		  			  <button type="button" class="btn btn-primary" id="inviteCodeBtn" onClick="addDogButton();">Generate Invitation Code</button>
+		</div>
+		<span id="invitationCode"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addDog" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Dog to Diary</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  <a class="btn btn-primary" data-toggle="collapse" href="#invitation" aria-expanded="false" aria-controls="invitation">
+    Add by Invitation Code
+  </a>
+			  <div class="collapse" id="invitation">
+  <div class="card card-body">
+    <div class="form-group">
+              <label for="message-text" class="col-form-label">Invite Code:</label>
+              <input type="text" class="form-control" id="inviteCode" placeholder="Invitation Code" required>
+          </div>
+	      <button type="button" class="btn btn-primary" id="inviteCodeBtn" onClick="addDogButton();">Save</button>
+  </div>
+</div>
+			  
+			  <br><br>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#newDog" aria-expanded="false" aria-controls="newDog">
+    Add New Dog
+  </button>
+		  <div class="collapse" id="newDog">
+  <div class="card card-body">
+    <form>    
+		<div class="form-group">
               <label for="message-text" class="col-form-label">Name:</label>
               <input type="text" class="form-control" id="dogName" placeholder="Doggo's Name" required>
           </div>
+            
           <div class="form-group">
             <label for="exampleFormControlSelect1">Gender:</label>
             <select class="form-control" id="genderSelect" required>
@@ -116,7 +165,7 @@
             </select>
         </div>
       <div class="form-group">
-        <label for="weight" id="weight" class="col-form-label">Weight:</label>
+        <label for="weight" class="col-form-label">Weight:</label>
         <input type="number" class="form-control" id="weight" placeholder="Doggo's Weight" min="1" max="300" required>
     </div>
     <div class="form-check">
@@ -137,9 +186,10 @@
     </label>
     </div>
       </form>
-      </div>
-      <div class="modal-footer">
-    <button type="button" class="btn btn-primary" id="saveDogButton" onClick="addDogButton();">Save</button>
+	      <button type="button" class="btn btn-primary" id="saveDogButton" onClick="addDogButton();">Save</button>
+  </div>
+</div>
+
       </div>
     </div>
   </div>
@@ -165,13 +215,15 @@
 	  <div id="innerDIV"></div>
 
 
-	  <button id="myBtn" title="Add" data-toggle="modal" data-target="#addEventModal"><b>+</b></button>
+	  <i id="myBtn" title="Add" data-toggle="modal" data-target="#addEventModal" class="fa fa-plus-circle" style="font-size:40px; color:blue;"></i>
+<!--	<i id="foodBtn" title="AddFood" data-toggle="modal" data-target="#addFoodModal" class="fa fa-plus-circle" style="font-size:40px; color:green;"></i>-->
+
 
 <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Log your walk</h5>
+        <h5 class="modal-title" id="walkModalLabel">Log your walk</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -201,7 +253,33 @@
   </div>
 </div>
 
-
+<div class="modal fade" id="addFoodModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="foodModalLabel">Log your food</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+			<div class="form-group">
+        <label for="cupsFood" class="col-form-label">Amount:</label>
+        <input type="number" class="form-control" id="cupsFood" placeholder="Number of cups" min="0" max="5" required>
+    </div>
+          <div class="form-group">
+            <label for="message-text2" class="col-form-label">Notes:</label>
+            <textarea class="form-control" id="foodNotes"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="addEvent()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

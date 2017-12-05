@@ -96,7 +96,7 @@ function displayAllNotes(snapshot){
 
          var reftoDIV = 	document.createElement("div");
          
-         reftoDIV.innerHTML = '<div class="card bg-info text-white text-center">\
+         reftoDIV.innerHTML = '<div class="card bg-info text-white text-center mx-auto" style="width: 600px;">\
              <div class="card-header">\
              <h1>Walk</h1>\
              <h2>' + childData.time + '</h2>\
