@@ -1,10 +1,10 @@
 // JavaScript Document
 
-var dogNameDB;
-var dogPicURL;
-var notes;
-var userName;
-var time;
+var dogNameDB = "";
+var dogPicURL = "" ;
+var notes="";
+var userName="";
+var time="";
 
 var globalCount = 0;
 
@@ -19,7 +19,7 @@ const fbStorage = firebase.storage();
 
     function getFilename(event){
         selectedFile = event.target.files[0];
-       // console.log(selectedFile);
+        //console.log(selectedFile);
     };
 
 	function addDogButton(){
@@ -31,13 +31,12 @@ const fbStorage = firebase.storage();
             name: document.getElementById('dogName').value,
             gender: gender,
             dateOfBirth: document.getElementById('birthday').value,
-           //age: document.getElementById('message-text').value,
             weight: document.getElementById('weight').value,
             NeuteredOrSpayed: document.getElementById('neutSpay').checked,
+            picFileName: selectedFile.name
         }; 
         saveDog(dogdata,newPostKey);
-        //readDog(userID);
-        //displayEvents(dogID)
+       // displayDatas(userID);
 		$('#addDog').modal('hide');
     }
         
@@ -48,23 +47,24 @@ const fbStorage = firebase.storage();
             //     dogKey = Object.keys(dogKey)[0];
             //     dogID = dogKey;
 
-                var storeRef = fbStorage.ref('dogProfilePics/' + key + '/' + selectedFile.name);
-                var uploadTask = storeRef.put(selectedFile);
+            var storeRef = fbStorage.ref('dogProfilePics/' + key + '/' + selectedFile.name);
+            var uploadTask = storeRef.put(selectedFile);
 
-                // Register three observers:
-                // 1. 'state_changed' observer, called any time the state changes
-                // 2. Error observer, called on failure
-                // 3. Completion observer, called on successful completion
-                uploadTask.on('state_changed', function(snapshot){
-                    // Observe state change events such as progress, pause, and resume
-                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                }, function(error) {
-                    // Handle unsuccessful uploads
-                }, function() {
-                    // Handle successful uploads on complete
-                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    var downloadURL = uploadTask.snapshot.downloadURL;
-                });
+            // Register three observers:
+            // 1. 'state_changed' observer, called any time the state changes
+            // 2. Error observer, called on failure
+            // 3. Completion observer, called on successful completion
+            uploadTask.on('state_changed', function(snapshot){
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            }, function(error) {
+                // Handle unsuccessful uploads
+            }, function() {
+                // Handle successful uploads on complete
+                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                var downloadURL = uploadTask.snapshot.downloadURL;
+                displayDatas(userID);
+            });
         }
 
 function saveDog(dogdata, newPostKey){
@@ -75,38 +75,41 @@ function saveDog(dogdata, newPostKey){
     // updates['/dogsList/' + uid + '/' ] = newPostKey;
   
     fbDatabase.ref('/dogsInfo/' + newPostKey).set(dogdata);
-    fbDatabase.ref('/eventList/'+ newPostKey).set({isEmpty:true});
-    fbDatabase.ref('/dogsList/' + userID + '/'+newPostKey).set({isEmpty:true});
+    fbDatabase.ref('/eventList/'+ newPostKey).set({name:dogdata.name});
+    fbDatabase.ref('/dogsList/' + userID + '/'+newPostKey).set({name:dogdata.name});
 
 }
 
 
 function displayDatas(userID){
-   // console.log(userID)
     var folder = fbDatabase.ref('/dogsList/'+ userID);
     var dogKey;
     folder.once('value',function(snapshot){
         dogKey = snapshot.exportVal();
-        dogKey = Object.keys(dogKey)[0];
-        dogID = dogKey;
-        //console.log(dogID);
-        folder = fbDatabase.ref('/dogsInfo/'+ dogKey);
-        folder.once('value',function(snapshot){
-          //  console.log(snapshot.val());
-            document.getElementById("dogName").innerHTML = snapshot.val().name;
-            })
-
-            // var reftoDIV = 	document.getElementById("innerDIV");
-            // reftoDIV.innerHTML = myCode;
-    
-            var folder = fbDatabase.ref('/eventList/'+ dogID);
-    
+        if(dogKey){
+            dogKey = Object.keys(dogKey)[0];
+            dogID = dogKey;
+            folder = fbDatabase.ref('/dogsInfo/'+ dogKey);
             folder.once('value',function(snapshot){
+            //  console.log(snapshot.val());
+                document.getElementById("dogNameMenu").innerHTML = snapshot.val().name;
+                var starsRef = firebase.storage().ref().child('dogProfilePics/' + dogID + '/' + snapshot.val().picFileName);            
+                // Get the download URL
+                starsRef.getDownloadURL().then(function(url){
+                    document.getElementById("dogPic").src = url;
+                });
+                //console.log(snapshot.val().name);
+            });
+                // var reftoDIV = 	document.getElementById("innerDIV");
+                // reftoDIV.innerHTML = myCode;
+            var folder = fbDatabase.ref('/eventList/'+ dogID);
+            folder.on('value',function(snapshot){
                 displayAllNotes(snapshot);
-            })
-        })
-        //console.log(dogID);
-        return dogID;
+            });
+        }
+    });
+    //console.log(dogID);
+    return dogID;
     // folder = fbDatabase.ref('/dogsInfo/'+ dogKey);
     // folder.once('value',function(snapshot){
     //     console.log(snapshot.val());
@@ -117,31 +120,29 @@ function displayDatas(userID){
 
 function displayAllNotes(snapshot){
 
+   
+    var inDIV = document.getElementById("innerDIV");
+    inDIV.innerHTML="";
     snapshot.forEach(function(childSnapshot){
         var childData = childSnapshot.val();
-        
          if(childData.note != null){
-
-         var reftoDIV = 	document.createElement("div");
-         
-         reftoDIV.innerHTML = '<div class="card bg-info text-white text-center">\
-             <div class="card-header">\
-             <h1>Walk</h1>\
-             <h2>' + childData.time + '</h2>\
-             </div>\<div class="card-body">\
-             <h4 class="card-title">Note: ' + childData.note + '</h4>\
-             <p id="notes" class="card-text"></p>\
-             </div>\
-             <div class="card-footer">By: Robin Dhakal </div>\
-             </div>\<br>';
-     
-         var inDIV = document.getElementById("innerDIV");
-         
-         if(!inDIV.childNodes.isEmpty){
-             inDIV.insertBefore(reftoDIV, inDIV.childNodes[0]);
-         }else{
-             inDIV.appendChild(reftoDIV);
-         }
+            var reftoDIV = 	document.createElement("div");
+            reftoDIV.innerHTML = '<div class="card bg-info text-white text-center">\
+                <div class="card-header">\
+                <h1>Walk</h1>\
+                <h2>' + childData.time + '</h2>\
+                </div>\<div class="card-body">\
+                <h4 class="card-title">Note: ' + childData.note + '</h4>\
+                <p id="notes" class="card-text"></p>\
+                </div>\
+                <div class="card-footer">By: Robin Dhakal </div>\
+                </div>\<br>';
+            
+            if(!inDIV.childNodes.isEmpty){
+                inDIV.insertBefore(reftoDIV, inDIV.childNodes[0]);
+            }else{
+                inDIV.appendChild(reftoDIV);
+            }
             //  console.log(childData.note);
             //  console.log(childData.time);
             //  console.log("next:");
@@ -237,10 +238,6 @@ function addEvent(){
             updates['/userInfo/' + userID] = userData;
             firebase.database().ref().update(updates);
 
-            /*
-             * TODO: display user data somewhere in front end
-             *
-             */
             var dog = displayDatas(userID);
            // console.log(dog)
             //displayEvents(dog);
@@ -276,10 +273,76 @@ function checkTime(i) {
     return i;
   }
 
-//
-//function hello(){
-//document.getElementById("innerDIV").innerHTML = myCode;
-//}
+function addFamilyMember(){
+    var folder = fbDatabase.ref('/dogsList/'+ userID);
+   // var dogKey;
+   console.log(userID);
+    folder.once('value',function(snapshot){ 
+        var inSelect = document.getElementById("dogSelect");
+        inSelect.innerHTML = "";
+        var reftoSelect = document.createElement("option");
+        reftoSelect.value = snapshot.key;
+        reftoSelect.innerHTML = 'All Dogs';
+        inSelect.appendChild(reftoSelect);
+        snapshot.forEach(function(childSnapshot){
+                var reftoSelect = 	document.createElement("option");
+                reftoSelect.value = childSnapshot.key;
+                reftoSelect.innerHTML = childSnapshot.val().name;
+                console.log(childSnapshot.val().name);
+                inSelect.appendChild(reftoSelect);
+        })
+    })
+
+}
+
+function generateInviteCode(){
+    var select = document.getElementById('dogSelect');
+    var invite;
+    if(select.selectedIndex == 0){
+        console.log("All Dogs" + select.options[select.selectedIndex].value);
+        invite = {
+            inviteType : "All Dogs",
+            dogID: select.options[select.selectedIndex].value
+        };
+    }
+    else{
+        console.log(select.options[select.selectedIndex].value);  
+        invite = {
+            inviteType : "Dog",
+            dogID: select.options[select.selectedIndex].value,
+            name: select.options[select.selectedIndex].innerHTML
+        };
+    }
+    var newPostKey = fbDatabase.ref().child('inviteList').push().key;
+    fbDatabase.ref('/inviteList/' + newPostKey).set(invite);
+    console.log("inviteCode: " + newPostKey);
+    /**
+     * TODO: show invite code
+     */
+
+}
+
+function addDogInvite(){
+    var inviteCode = document.getElementById('inviteCode').value;
+    console.log(inviteCode);
+
+    var folder = fbDatabase.ref('/inviteList/'+ inviteCode);
+    folder.once('value',function(snapshot){
+        if(snapshot.val().inviteType == "All Dogs"){
+            console.log("All Dogs: "+ snapshot.val().dogID);
+            fbDatabase.ref('/dogsList/' + snapshot.val().dogID).once('value',function(snapshot2){
+                fbDatabase.ref('/dogsList/' + userID + '/').set(snapshot2.val());
+            })
+        }
+        else{
+            console.log("Dog: "+ snapshot.val().dogID);
+            fbDatabase.ref('/dogsList/' + userID + '/'+ snapshot.val().dogID).set({name:snapshot.val().name});
+        }
+    });
+    displayDatas(userID);
+
+}
+
 function signOut(){
     firebase.auth().signOut().then(function() {
        window.location.href = "index.html";
