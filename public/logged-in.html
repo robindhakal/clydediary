@@ -27,6 +27,8 @@
   };
   firebase.initializeApp(config);
   </script>
+	  
+	  
 
   <script src="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.js"></script>
   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.css" />
@@ -50,7 +52,7 @@
     ui.start('#firebaseui-auth-container', uiConfig);
   </script>
 
-  	  <script src="main.js" type="application/javascript"></script>
+  	  <!--<script src="main.js" type="application/javascript"></script>-->
 
   </head>
   <body>
@@ -98,7 +100,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Share dog profile</h5>
+        <h5 class="modal-title">Share dog profile</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -106,31 +108,20 @@
       <div class="modal-body">
 		  <div class="form-group">
             <label for="exampleFormControlSelect1">Select a dog:</label>
-<<<<<<< HEAD
 				<select class="form-control" id="dogSelect" required></select>
-=======
-				<select class="form-control" id="genderSelect" required>
-				  <option selected>Choose One...</option>
-				  <option></option>
-				  <option></option>
-				  <option></option>
-				</select>
-			  		<code id="invitationCode"></code>
-
->>>>>>> saras
+			  			  	<span id="invitationCode"></span>
         </div>
-		  			  <button type="button" class="btn btn-primary" id="inviteCodeBtn" onClick="generateInviteCode()">Generate Invitation Code</button>
+		  			  <button type="button" class="btn btn-primary" onClick="generateInviteCode()">Generate Invitation Code</button>
 		</div>
       </div>
     </div>
   </div>
-</div>
 
 <div class="modal fade" id="addDog" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Dog to Diary</h5>
+        <h5 class="modal-title">Add Dog to Diary</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -145,12 +136,7 @@
               <label for="message-text" class="col-form-label">Invite Code:</label>
               <input type="text" class="form-control" id="inviteCode" placeholder="Invitation Code" required>
           </div>
-<<<<<<< HEAD
-	      <button type="button" class="btn btn-primary" id="inviteCodeBtn" onClick="addDogInvite();">Save</button>
-=======
-	  	<span id="invitationCode"></span>
 	      <button type="button" class="btn btn-primary" id="inviteCodeBtn" onClick="addDogButton();">Save</button>
->>>>>>> saras
   </div>
 </div>
 			  
@@ -223,7 +209,64 @@
 
 <br>
 
-	  <div id="innerDIV"></div>
+	  <div id="innerDIV">
+	  
+
+	
+		  <div class="card bg-info text-white text-center">
+                <div class="card-header">
+                <div class="row">
+    <div class="col">
+		<h1>Today 9:30 P.M.</h1>
+    </div>
+    <div class="col">
+      <h1>Walk</h1>
+    </div>
+    <div class="col">
+      <h1>For 30 minutes</h1>
+    </div>
+</div>
+                </div><div class="card-body">
+                <h4 class="card-title">Note: This is what a note will look like.
+			  
+			  </h4>
+                <p id="notes" class="card-text"></p>
+                </div>
+                <div class="card-footer">
+					<div class="row">
+  <div class="col-auto mr-auto"><span style="font-size: 20px; text-shadow: 2px 2px #FFFFF;">💩💦</span></div>
+  <div class="col-auto">By Robin Dhakal</div>
+</div>
+			  </div>
+                </div>
+		  
+		  <br>
+		  
+		  <div class="card bg-warning text-white text-center">
+                <div class="card-header">
+               	<div class="row justify-content-start">
+    <div class="col-4">
+<h1>Today 9:30 P.M.</h1></div>
+    <div class="col-4">
+      <h1>Food</h1>
+    </div>
+                </div>
+			  </div>
+					<div class="card-body">
+                <h4 class="card-title">Note: This is what a note will look like.
+			  
+			  </h4>
+                </div>
+                <div class="card-footer">
+					<div class="row">
+  <div class="col-auto mr-auto"><img src="cup.png" width="20px" height="20px"><img src="cup.png" width="20px" height="20px"></div>
+  <div class="col-auto">By Robin Dhakal</div>
+</div>
+			  </div>
+                </div>
+	  
+	  
+	  </div>
 
 
 	  <i id="myBtn" title="Add" data-toggle="modal" data-target="#addEventModal" class="btn btn-info">Log Walk</i>

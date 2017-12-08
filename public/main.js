@@ -316,6 +316,10 @@ function generateInviteCode(){
     var newPostKey = fbDatabase.ref().child('inviteList').push().key;
     fbDatabase.ref('/inviteList/' + newPostKey).set(invite);
     console.log("inviteCode: " + newPostKey);
+	
+	
+	var reftoCode = document.getElementById('invitationCode');
+    reftoCode.innerHTML = newPostKey;
     /**
      * TODO: show invite code
      */
