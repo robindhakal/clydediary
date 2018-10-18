@@ -1,0 +1,25 @@
+[debug] [2018-10-15T01:07:40.739Z] ----------------------------------------------------------------------
+[debug] [2018-10-15T01:07:40.740Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-10-15T01:07:40.740Z] CLI Version:   5.0.1
+[debug] [2018-10-15T01:07:40.740Z] Platform:      darwin
+[debug] [2018-10-15T01:07:40.741Z] Node Version:  v8.11.4
+[debug] [2018-10-15T01:07:40.741Z] Time:          Sun Oct 14 2018 20:07:40 GMT-0500 (CDT)
+[debug] [2018-10-15T01:07:40.741Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-15T01:07:40.748Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-15T01:07:40.748Z] > authorizing via signed-in user
+[debug] [2018-10-15T01:07:40.748Z] [iam] checking project clyde-diary for permissions ["firebase.projects.get"]
+[debug] [2018-10-15T01:07:40.750Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/clyde-diary:testIamPermissions  
+
+[debug] [2018-10-15T01:07:41.070Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-15T01:07:41.072Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/clyde-diary  
+ 
+[debug] [2018-10-15T01:07:41.345Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/robindhakal/Documents/codes/firebase/clydeDiary/clydediary'...
+[info] 
+[debug] [2018-10-15T01:07:41.347Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/532713680020/clients/_:getWebAppConfig  
+ 
+[debug] [2018-10-15T01:07:44.030Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
